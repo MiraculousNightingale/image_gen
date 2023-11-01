@@ -28,26 +28,17 @@ class ControlButtons extends StatelessWidget {
       future: loadImageFuture,
       builder: (context, snapshot) {
         final isLoading = snapshot.connectionState == ConnectionState.waiting;
-
-        final canShowPrevious = !isLoading ||
-            !snapshot.hasError &&
-                currentPrompt.isLoaded &&
-                previousPrompt.isLoaded;
-
-        final canShowNext = !isLoading ||
-            !snapshot.hasError && currentPrompt.isLoaded && nextPrompt.isLoaded;
-
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             if (currentIndex > 0)
               ElevatedButton(
-                onPressed: canShowPrevious ? onPrevious : null,
+                onPressed: !isLoading ? onPrevious : null,
                 child: const Text('Previous'),
               ),
             if (currentIndex < prompts.length - 1)
               ElevatedButton(
-                onPressed: canShowNext ? onNext : null,
+                onPressed: !isLoading ? onNext : null,
                 child: const Text('Next'),
               ),
           ],
